@@ -19,17 +19,22 @@ const Add = () => {
         event.preventDefault();
 
         if (!image) {
-            toast.error('Image not selected');
+            toast.error("Image not selected");
             return null;
         }
 
         const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("description", data.description);
-        formData.append("price", Number(data.price));
-        formData.append("category", data.category);
-        formData.append("image", image);
-        const response = await axios.post(`${url}/api/food/add`, formData);
+
+                formData.append("name", data.name);
+                formData.append("description", data.description);
+                formData.append("price", Number(data.price));
+                formData.append("category", data.category);
+                formData.append("image", image);
+
+                const response = await axios.post(
+                    `${url}/api/food/add`,
+                    formData
+                );
         if (response.data.success) {
             toast.success(response.data.message)
             setData({
