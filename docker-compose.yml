@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    image: pranithaprabhakar/food-backend
+    container_name: food-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGODB_URI=mongodb+srv://yogesh_db_user:Helloaws1@foodapp-databse.z3kzobt.mongodb.net/food-delivery?retryWrites=true&w=majority&appName=Foodapp-databse
+      - JWT_SECRET=random#secret
+      - STRIPE_SECRET_KEY=your_stripe_key_here
+    restart: unless-stopped
+
+  frontend:
+    image: pranithaprabhakar/food-frontend
+    container_name: food-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  admin:
+    image: pranithaprabhakar/food-admin
+    container_name: food-admin
+    ports:
+      - "5174:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
