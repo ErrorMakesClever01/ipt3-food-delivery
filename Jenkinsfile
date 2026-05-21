@@ -37,7 +37,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
                             cd ${APP_DIR}
 
-                            git pull origin feature
+                            git pull --no-rebase origin feature
 
                             docker compose down || true
 
