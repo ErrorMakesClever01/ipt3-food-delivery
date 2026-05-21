@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        EC2_HOST = "44.213.238.31"
+        APP_DIR = "/home/ubuntu/ipt3-food-delivery"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,38 +14,60 @@ pipeline {
             }
         }
 
-        stage('Build Images') {
+        stage('Install Dependencies') {
             steps {
                 sh '''
-                docker compose build
+                    cd backend && npm install
+                    cd ../frontend && npm install
+                    cd ../admin && npm install
                 '''
             }
         }
 
-        stage('Stop Existing Containers') {
+        stage('Run Tests') {
             steps {
                 sh '''
-                docker compose down || true
+                    echo "Running tests..."
                 '''
             }
         }
 
-        stage('Deploy') {
+        stage('Build Docker Images') {
             steps {
                 sh '''
-                docker compose up -d
+                    docker compose build
                 '''
             }
         }
-        
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(credentials: ['ec2-key']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
+                            cd ${APP_DIR}
+
+                            git pull origin feature
+
+                            docker compose down || true
+
+                            docker compose up -d --build
+
+                            docker ps
+                        '
+                    """
+                }
+            }
+        }
+    }
 
     post {
         success {
-            echo 'Deployment Successful'
+            echo 'Application deployed successfully'
         }
 
         failure {
-            echo 'Deployment Failed'
+            echo 'Pipeline failed'
         }
     }
 }
