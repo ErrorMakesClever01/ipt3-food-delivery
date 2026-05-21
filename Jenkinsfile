@@ -14,16 +14,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                    cd backend && npm install
-                    cd ../frontend && npm install
-                    cd ../admin && npm install
-                '''
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 sh '''
