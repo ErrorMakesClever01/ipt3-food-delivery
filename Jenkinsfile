@@ -39,6 +39,8 @@ pipeline {
 
                             git pull --no-rebase origin feature
 
+                            git checkout feature
+
                             docker compose down || true
 
                             docker compose up -d --build
