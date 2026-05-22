@@ -33,7 +33,7 @@ pipeline {
             ]) {
                     withSonarQubeEnv('SonarQube') {
                         sh '''
-                        sonar-scanner \
+                        ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=ipt3-project \
                         -Dsonar.projectName="IPT3 Food Delivery" \
                         -Dsonar.sources=. \
