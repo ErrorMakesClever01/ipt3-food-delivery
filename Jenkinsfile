@@ -13,13 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'feature',
-                    url: 'https://github.com/ErrorMakesClever01/ipt3-food-delivery.git'
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 script {
