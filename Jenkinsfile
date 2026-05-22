@@ -5,7 +5,7 @@ pipeline {
         EC2_HOST = "44.213.238.31"
         APP_DIR = "/home/ubuntu/ipt3-food-delivery"
         SONAR_HOST_URL = "http://44.213.238.31:9000"
-        DOCKER_USER = "pranithaprabhakar"
+        DOCKER_USERNAME = "pranithaprabhakar"
         FRONTEND_IMAGE = "${DOCKER_USER}/food-frontend"
         BACKEND_IMAGE  = "${DOCKER_USER}/food-backend"
         ADMIN_IMAGE    = "${DOCKER_USER}/food-admin"
