@@ -22,10 +22,10 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-        script {
-            def scannerHome = tool('SonarScanner')
+                script {
+                def scannerHome = tool('SonarScanner')
 
-            withCredentials([
+                withCredentials([
                 string(
                     credentialsId: 'SonarQube-Token',
                     variable: 'SONAR_TOKEN'
@@ -131,18 +131,19 @@ pipeline {
                             sudo docker ps
                             '
                         """
+                    }
                 }
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Application deployed successfully!!!'
-        }
+        post {
+            success {
+                echo 'Application deployed successfully!!!'
+            }
 
-        failure {
-            echo 'Pipeline failed'
+            failure {
+                echo 'Pipeline failed'
+            }
         }
     }
 }
