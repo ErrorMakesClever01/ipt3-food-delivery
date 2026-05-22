@@ -8,7 +8,12 @@ pipeline {
     environment {
         EC2_HOST = "44.213.238.31"
         APP_DIR = "/home/ubuntu/ipt3-food-delivery"
-        SONAR_HOST_URL = "http://localhost:9000"
+        SONAR_HOST_URL = "http://44.213.238.31:9000"
+        DOCKER_USER = "pranithaprabhakar"
+        FRONTEND_IMAGE = "${DOCKER_USER}/food-frontend"
+        BACKEND_IMAGE  = "${DOCKER_USER}/food-backend"
+        ADMIN_IMAGE    = "${DOCKER_USER}/food-admin"
+
     }
 
     stages {
@@ -19,15 +24,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                sh '''
-                    echo "Running tests..."
-                '''
-            }
-        }
-
-        stage('SonarQube Analysis'){
+        stage('SonarQube Analysis') {
             steps {
                 withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv('SonarQube') {
@@ -52,11 +49,43 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Backend Image') {
             steps {
-                sh '''
-                    docker compose build
-                '''
+                dir('backend') {
+                    sh """
+                    docker build -t ${BACKEND_IMAGE}:latest .
+                    """
+                }
+            }
+        }
+
+        stage('Build Frontend Image') {
+            steps {
+                dir('frontend') {
+                    sh """
+                    docker build -t ${FRONTEND_IMAGE}:latest .
+                    """
+                }
+            }
+        }
+
+        stage('Build Admin Image') {
+            steps {
+                dir('admin') {
+                    sh """
+                    docker build -t ${ADMIN_IMAGE}:latest .
+                    """
+                }
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                sh """
+                docker push ${BACKEND_IMAGE}:latest
+                docker push ${FRONTEND_IMAGE}:latest
+                docker push ${ADMIN_IMAGE}:latest
+                """
             }
         }
 
@@ -73,11 +102,15 @@ pipeline {
 
                             sudo docker compose down || true
 
-                            sudo docker compose up -d --build
+                            sudo docker pull ${BACKEND_IMAGE}:latest
+                            sudo docker pull ${FRONTEND_IMAGE}:latest
+                            sudo docker pull ${ADMIN_IMAGE}:latest
+
+                            sudo docker compose up -d
 
                             sudo docker ps
-                        '
-                    """
+                            '
+                        """
                 }
             }
         }
