@@ -37,13 +37,13 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
                             cd ${APP_DIR}
 
-                            git pull --no-rebase origin feature
-
                             git checkout feature
 
-                            docker compose down || true
+                            git pull --no-rebase origin feature
 
-                            docker compose up -d --build
+                            sudo docker compose down || true
+
+                            sudo docker compose up -d --build
 
                             docker ps
                         '
