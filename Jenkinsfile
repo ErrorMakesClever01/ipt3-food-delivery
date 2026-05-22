@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        SonarScanner 'SonarScanner'
-    }
-
     environment {
         EC2_HOST = "44.213.238.31"
         APP_DIR = "/home/ubuntu/ipt3-food-delivery"
@@ -75,6 +71,22 @@ pipeline {
                     sh """
                     docker build -t ${ADMIN_IMAGE}:latest .
                     """
+                }
+            }
+        }
+
+        stage('DockerHub Login') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                    '''
                 }
             }
         }
