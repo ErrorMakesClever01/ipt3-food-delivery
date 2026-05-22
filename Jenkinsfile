@@ -22,7 +22,15 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
+        script {
+            def scannerHome = tool('SonarScanner')
+
+            withCredentials([
+                string(
+                    credentialsId: 'SonarQube-Token',
+                    variable: 'SONAR_TOKEN'
+                )
+            ]) {
                     withSonarQubeEnv('SonarQube') {
                         sh '''
                         sonar-scanner \
