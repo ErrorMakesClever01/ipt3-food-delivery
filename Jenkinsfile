@@ -47,34 +47,14 @@ pipeline {
             }
         }
 
-        stage('Build Backend Image') {
+        stage('Build Images') {
             steps {
-                dir('backend') {
                     sh """
                     docker build -t ${BACKEND_IMAGE}:latest .
-                    """
-                }
-            }
-        }
-
-        stage('Build Frontend Image') {
-            steps {
-                dir('frontend') {
-                    sh """
                     docker build -t ${FRONTEND_IMAGE}:latest .
-                    """
-                }
-            }
-        }
-
-        stage('Build Admin Image') {
-            steps {
-                dir('admin') {
-                    sh """
                     docker build -t ${ADMIN_IMAGE}:latest .
                     """
                 }
-            }
         }
 
         stage('DockerHub Login') {
