@@ -103,7 +103,7 @@ pipeline {
 
                             git checkout feature
 
-                            git pull --no-rebase origin feature
+                            git pull origin feature
 
                             sudo docker compose down || true
 
