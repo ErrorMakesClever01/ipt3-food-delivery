@@ -50,9 +50,9 @@ pipeline {
         stage('Build Images') {
             steps {
                     sh """
-                    docker build -t ${BACKEND_IMAGE}:latest .
-                    docker build -t ${FRONTEND_IMAGE}:latest .
-                    docker build -t ${ADMIN_IMAGE}:latest .
+                    docker build -t ${BACKEND_IMAGE}:latest ./backend
+                    docker build -t ${FRONTEND_IMAGE}:latest ./frontend
+                    docker build -t ${ADMIN_IMAGE}:latest ./admin
                     """
                 }
         }
