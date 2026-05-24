@@ -35,7 +35,7 @@ pipeline {
                 }
             }
         }
-    }    
+        
 
         stage('Quality Gate') {
             steps {
@@ -125,6 +125,7 @@ pipeline {
 
             failure {
                 echo 'Pipeline failed'
+            }
         }
     }
 }
