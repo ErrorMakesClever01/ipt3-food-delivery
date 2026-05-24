@@ -105,6 +105,8 @@ pipeline {
 
                             git pull --no-rebase origin feature
 
+                            sudo docker compose down || true
+
                             sudo docker pull ${BACKEND_IMAGE}:latest &
                             sudo docker pull ${FRONTEND_IMAGE}:latest &
                             sudo docker pull ${ADMIN_IMAGE}:latest &
