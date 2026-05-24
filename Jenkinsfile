@@ -28,10 +28,9 @@ pipeline {
                         sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=ipt3-project \
-                        -Dsonar.sources=backend/src,frontend/src,admin/src \
                         -Dsonar.host.url=${SONAR_HOST_URL} \
                         -Dsonar.token=${SONAR_TOKEN}
-        """
+                    """
                     }
                 }
             }
