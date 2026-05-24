@@ -25,19 +25,17 @@ pipeline {
                 )
             ]) {
                     withSonarQubeEnv('SonarQube') {
-                        sh '''
-                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner \
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=ipt3-project \
-                        -Dsonar.projectName="IPT3 Food Delivery" \
                         -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_TOKEN
-                        '''
+                        -Dsonar.exclusions=node_modules/**,dist/**,build/**
+                        """
                     }
                 }
             }
         }
-    }
+    
 
         stage('Quality Gate') {
             steps {
@@ -131,4 +129,5 @@ pipeline {
                 echo 'Pipeline failed'
         }
     }
+}
 }
