@@ -24,12 +24,13 @@ pipeline {
                     variable: 'SONAR_TOKEN'
                 )
             ]) {
-                    withSonarQubeEnv('SonarQube') {
-                        sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=ipt3-project \
-                        -Dsonar.host.url=${SONAR_HOST_URL} \
-                        -Dsonar.token=${SONAR_TOKEN}
+                withSonarQubeEnv('SonarQube') {
+                    sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=ipt3-project \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=$SONAR_HOST_URL \
+                    -Dsonar.token=$SONAR_TOKEN
                     """
                     }
                 }
