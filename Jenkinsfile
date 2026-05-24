@@ -15,6 +15,9 @@ pipeline {
     stages {
         stage('SonarQube Analysis') {
             steps {
+                script {
+                def scannerHome = tool 'SonarScanner'
+
                 withCredentials([
                 string(
                     credentialsId: 'SonarQube-Token',
@@ -34,7 +37,7 @@ pipeline {
                 }
             }
         }
-
+    }
 
         stage('Quality Gate') {
             steps {
