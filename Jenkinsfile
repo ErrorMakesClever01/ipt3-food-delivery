@@ -16,7 +16,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                def scannerHome = tool('SonarScanner')
+                def scannerHome = tool 'SonarScanner'
 
                 withCredentials([
                 string(
@@ -26,7 +26,7 @@ pipeline {
             ]) {
                     withSonarQubeEnv('SonarQube') {
                         sh '''
-                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner \
+                        ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=ipt3-project \
                         -Dsonar.projectName="IPT3 Food Delivery" \
                         -Dsonar.sources=. \
