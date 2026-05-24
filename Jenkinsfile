@@ -87,9 +87,9 @@ pipeline {
         stage('Push Images') {
             steps {
                 sh """
-                docker push ${BACKEND_IMAGE}:latest
-                docker push ${FRONTEND_IMAGE}:latest
-                docker push ${ADMIN_IMAGE}:latest
+                docker push ${BACKEND_IMAGE}:latest &
+                docker push ${FRONTEND_IMAGE}:latest &
+                docker push ${ADMIN_IMAGE}:latest &
                 """
             }
         }
