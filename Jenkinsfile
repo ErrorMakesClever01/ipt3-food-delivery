@@ -26,11 +26,12 @@ pipeline {
             ]) {
                     withSonarQubeEnv('SonarQube') {
                         sh """
-                        ${scannerHome}/bin/sonar-scanner \
+                        ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=ipt3-project \
-                        -Dsonar.sources=. \
-                        -Dsonar.exclusions=node_modules/**,dist/**,build/**
-                        """
+                        -Dsonar.sources=backend/src,frontend/src,admin/src \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.token=${SONAR_TOKEN}
+        """
                     }
                 }
             }
@@ -104,11 +105,9 @@ pipeline {
 
                             git pull --no-rebase origin feature
 
-                            sudo docker compose down || true
-
-                            sudo docker pull ${BACKEND_IMAGE}:latest
-                            sudo docker pull ${FRONTEND_IMAGE}:latest
-                            sudo docker pull ${ADMIN_IMAGE}:latest
+                            sudo docker pull ${BACKEND_IMAGE}:latest &
+                            sudo docker pull ${FRONTEND_IMAGE}:latest &
+                            sudo docker pull ${ADMIN_IMAGE}:latest &
 
                             sudo docker compose up -d
 
