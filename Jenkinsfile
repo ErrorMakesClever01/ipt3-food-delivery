@@ -48,13 +48,25 @@ pipeline {
         }
 
         stage('Build Images') {
-            steps {
-                    sh """
-                    docker build -t ${BACKEND_IMAGE}:latest ./backend
-                    docker build -t ${FRONTEND_IMAGE}:latest ./frontend
-                    docker build -t ${ADMIN_IMAGE}:latest ./admin
-                    """
+            parallel {
+                stage('Backend') {
+                    steps {
+                        sh 'docker build -t pranithaprabhakar/food-backend:latest ./backend'
+                    }
                 }
+
+                stage('Frontend') {
+                    steps {
+                        sh 'docker build -t pranithaprabhakar/food-frontend:latest ./frontend'
+                    }
+                }
+
+                stage('Admin') {
+                    steps {
+                        sh 'docker build -t pranithaprabhakar/food-admin:latest ./admin'
+                    }
+                }
+            }
         }
 
         stage('DockerHub Login') {
