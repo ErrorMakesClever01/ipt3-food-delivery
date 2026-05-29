@@ -105,7 +105,7 @@ pipeline {
 
                             git pull origin feature
 
-                            sudo docker compose down || true
+                            sudo docker-compose down || true
 
                             sudo docker pull ${BACKEND_IMAGE}:latest &
                             sudo docker pull ${FRONTEND_IMAGE}:latest &
@@ -113,7 +113,7 @@ pipeline {
 
                             wait
 
-                            sudo docker compose up -d
+                            sudo docker-compose up -d
 
                             sudo docker ps
                             '
