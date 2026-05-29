@@ -5,7 +5,7 @@ import profile_image from './profile_image.png'
 import upload_area from './upload_area.png'
 import parcel_icon from './parcel_icon.png'
 
-export const url = "https://api.tech-store.website"
+export const url = "https://65.2.44.174:4000"
 export const currency = '₹'
 
 export const assets ={

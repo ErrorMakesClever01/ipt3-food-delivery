@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
-    const url = "https://api.tech-store.website"
+    const url = "https://65.2.44.174:4000"
     const [food_list, setFoodList] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState("")
