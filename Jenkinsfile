@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout Code'){
             steps{
-                git branch: "main", url: "https://github.com/yogeshrajendran-24/quote-generator.git"
+                git branch: "main", url: "https://github.com/ErrorMakesClever01/ipt3-food-delivery.git"
             }
         }
 
