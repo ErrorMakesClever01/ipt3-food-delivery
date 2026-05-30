@@ -113,6 +113,7 @@ pipeline {
                             sudo docker pull ${FRONTEND_IMAGE}:latest &
                             sudo docker pull ${ADMIN_IMAGE}:latest &
 
+                            wait
 
                             sudo docker-compose up -d 
 
