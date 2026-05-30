@@ -13,12 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code'){
-            steps{
-                git branch: "main", url: "https://github.com/ErrorMakesClever01/ipt3-food-delivery.git"
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -119,7 +113,6 @@ pipeline {
                             sudo docker pull ${FRONTEND_IMAGE}:latest &
                             sudo docker pull ${ADMIN_IMAGE}:latest &
 
-                            wait
 
                             sudo docker-compose up -d 
 
