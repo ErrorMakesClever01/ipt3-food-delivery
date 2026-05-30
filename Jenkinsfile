@@ -121,7 +121,7 @@ pipeline {
 
                             wait
 
-                            sudo docker-compose up --build -d
+                            sudo docker-compose up --build 
 
                             sudo docker ps
                             '
