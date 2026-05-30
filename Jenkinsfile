@@ -115,7 +115,7 @@ pipeline {
 
                             wait
 
-                            sudo docker-compose up -d --force-recreate
+                            sudo docker-compose up --build -d --force-recreate
 
                             sudo docker ps
                             '
