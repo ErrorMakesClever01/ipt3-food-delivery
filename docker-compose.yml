@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    build: ./backend
+    image: pranithaprabhakar/food-delivery-backend:latest
     container_name: food-backend
     ports:
       - "4000:4000"
@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build: ./frontend
+    image: pranithaprabhakar/food-delivery-frontend:latest
     container_name: food-frontend
     ports:
       - "5173:80"
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
 
   admin:
-    build: ./admin
+    image: pranithaprabhakar/food-delivery-admin:latest
     container_name: food-admin
     ports:
       - "5174:80"
