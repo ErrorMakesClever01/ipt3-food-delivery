@@ -13,6 +13,12 @@ pipeline {
     }
 
     stages {
+        stage('Checkout Code'){
+            steps{
+                git branch: "main", url: "https://github.com/yogeshrajendran-24/quote-generator.git"
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 script {
