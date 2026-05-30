@@ -31,4 +31,4 @@ app.get("/", (req, res) => {
     res.send("API Working")
   });
 
-app.listen(port, () => console.log(`Server started on http://65.2.44.174:${port}`))
+app.listen(port, () => console.log(`Server started on "https://api.tech-store.website"`))
